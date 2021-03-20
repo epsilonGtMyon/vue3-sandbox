@@ -1,4 +1,4 @@
-import { ref } from "@vue/reactivity";
+import { readonly, ref } from "@vue/reactivity";
 
 function useCounter(plusCount = 1) {
   const counter = ref(0);
@@ -7,7 +7,7 @@ function useCounter(plusCount = 1) {
   };
 
   return {
-    counter,
+    counter: readonly(counter),
     increment,
   };
 }
