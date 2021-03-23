@@ -4,6 +4,9 @@
       <li>
         <router-link to="/sandbox01">Sandbox01</router-link>
       </li>
+      <li>
+        <router-link to="/sandbox02">Sandbox02</router-link>
+      </li>
     </ul>
   </div>
 </template>

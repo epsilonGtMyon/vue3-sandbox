@@ -1,12 +1,15 @@
-import { InjectionKey } from "@vue/runtime-core";
+import { InjectionKey } from "vue";
 import { createStore, Store, useStore } from "vuex";
+import { loading, LoadingState } from "./loading";
 
 interface State {
   count: number;
+  loading?: LoadingState,
 }
 //型情報を教えるためのキーらしい
 const key: InjectionKey<Store<State>> = Symbol();
 
+//moduleの型つけられへんのかな？？
 const store = createStore<State>({
   state: {
     count: 0,
@@ -25,7 +28,9 @@ const store = createStore<State>({
     },
   },
   actions: {},
-  modules: {},
+  modules: {
+    loading,
+  },
 });
 
 function useAppStore(): Store<State> {
