@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 const useLoadingStore = defineStore({
+  //idは必要
   id: "loading",
   state: () => ({
     loadingCount: 0,
