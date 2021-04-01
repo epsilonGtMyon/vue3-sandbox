@@ -1,24 +1,10 @@
 # use-message-dialog
 
-## Project setup
-```
-npm install
-```
+メッセージダイアログを出すにはどうしたらいいか🤔
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+とりあえず `App.vue` に `MessageDialog.vue` を持たせて
+`provide` を使うようにしてみる。
 
-### Compiles and minifies for production
-```
-npm run build
-```
+いまいち..
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+`getCurrentInstance` を使ってうまい具合にかけないかな...
