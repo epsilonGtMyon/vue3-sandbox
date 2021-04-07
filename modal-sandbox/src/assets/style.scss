@@ -1,1 +1,32 @@
-@use '~minireset.css/minireset.sass'
+@use '~minireset.css/minireset.sass';
+
+:root {
+  --color-primary: rgb(50, 200, 100);
+  --color-warning: rgb(250, 200, 100);
+  --color-danger: rgb(237, 100, 250);
+}
+
+.button {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: calc(0.5em - 1px);
+  padding-bottom: calc(0.5em - 1px);
+
+  border-radius: 0.5em;
+
+  &.is-primary {
+    background-color: var(--color-primary);
+    border-color: transparent;
+    color: white;
+  }
+  &.is-warning {
+    background-color: var(--color-warning);
+    border-color: transparent;
+    color: black;
+  }
+  &.is-danger {
+    background-color: var(--color-danger);
+    border-color: transparent;
+    color: white;
+  }
+}

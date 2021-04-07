@@ -1,8 +1,16 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
-import '@/assets/style.scss'
+import Modal from "@/components/modal/Modal.vue";
 
-createApp(App).use(store).use(router).mount('#app')
+import "@/assets/style.scss";
+
+const app = createApp(App)
+  .use(store)
+  .use(router);
+
+app.component(Modal.name, Modal);
+
+app.mount("#app");
