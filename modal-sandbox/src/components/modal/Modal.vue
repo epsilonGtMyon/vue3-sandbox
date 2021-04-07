@@ -19,6 +19,7 @@
 import { defineComponent, onBeforeUnmount, ref } from "vue";
 import { ModalResult } from "./ModalResult";
 
+//Teleport の機能を使ってbodyの後ろの方に持って行ったほうがいいかもしれない
 export default defineComponent({
   name: "Modal",
   props: {
