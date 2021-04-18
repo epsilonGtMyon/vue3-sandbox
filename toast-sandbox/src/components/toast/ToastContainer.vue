@@ -28,8 +28,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
-import Toast, { ToastProp } from "./Toast.vue";
+import { computed, defineComponent, provide, ref } from "vue";
+import Toast from "./Toast.vue";
+import { ToastPublisher, toastPublisherKey } from "./ToastPublisher";
+import { ToastProp } from "./type/ToastProp";
 
 export default defineComponent({
   name: "ToastContainer",
@@ -39,20 +41,12 @@ export default defineComponent({
   setup() {
     const _toasts = ref<ToastProp[]>([]);
 
-    onMounted(() => {
-      let id = 1;
-      setInterval(() => {
-        id++;
-
-        _toasts.value.push({
-          id: String(id),
-          type: ["primary", "success", "warning", "danger"][id%4] as any,
-          message: `aaa${id}`,
-          position: ["is-top-left", "is-bottom-left"][id%2]as any,
-          timeoutMills: 3000,
-        });
-      }, 500);
-    });
+    //TODO このやり方ではだめ、コンポーネントの子ツリーしかinjectで受け取れない
+    //App.vueでprovideするようにしないといけない
+    //ToastPublisherをインジェクション
+    const toastPublisher = new ToastPublisher(_toasts);
+    provide(toastPublisherKey, toastPublisher);
+    //----------------------------
 
     const removeToast = (id: string) => {
       _toasts.value = _toasts.value.filter((x) => x.id !== id);

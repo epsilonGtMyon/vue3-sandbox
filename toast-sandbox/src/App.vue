@@ -5,5 +5,5 @@
   </div>
   <router-view />
 
-  <ToastContainer/>
+  <ToastContainer />
 </template>
