@@ -17,6 +17,9 @@
       </button>
       <button class="button is-danger" @click="showDangerBottom">danger</button>
     </div>
+    <div>
+      <button class="button is-success" @click="clear">clear</button>
+    </div>
   </div>
 </template>
 
@@ -50,6 +53,10 @@ export default defineComponent({
     const showDangerBottom = () => {
       toast.danger(message.value, "is-bottom-right");
     };
+
+    const clear = () => {
+      toast.clear();
+    };
     return {
       message,
       showPrimary,
@@ -59,6 +66,8 @@ export default defineComponent({
       showPrimaryBottom,
       showWarningBottom,
       showDangerBottom,
+
+      clear,
     };
   },
 });
