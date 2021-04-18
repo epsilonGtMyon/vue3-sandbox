@@ -1,14 +1,21 @@
 <template>
   <div class="toast" :class="classes">
     {{ message }}
-    <span class="close"></span>
+    <span class="close" @click="emitClickClosed"></span>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import {
+  computed,
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+} from "vue";
 
-type ToastProp = {
+export type ToastProp = {
+  id: string;
   type: "primary" | "success" | "warning" | "danger";
   message: string;
   position:
@@ -18,11 +25,16 @@ type ToastProp = {
     | "is-bottom-right"
     | "is-bottom-left"
     | "is-bottom-center";
+  timeoutMills: number;
 };
 
 export default defineComponent({
   name: "Toast",
   props: {
+    id: {
+      type: String,
+      require: true,
+    },
     type: {
       type: String as PropType<ToastProp["type"]>,
       require: true,
@@ -35,14 +47,45 @@ export default defineComponent({
       type: String as PropType<ToastProp["position"]>,
       require: true,
     },
+    timeoutMills: {
+      type: Number,
+      default: -1,
+    },
   },
-  setup(props) {
+  emits: ["clickClosed", "timeout"],
+  setup(props, { emit }) {
+    let timerId = -1;
+
+    onMounted(() => {
+      //タイムアウトがあればタイマー設定
+      if (props.timeoutMills > -1) {
+        timerId = setTimeout(() => {
+          emit("timeout", props.id);
+        }, props.timeoutMills);
+      }
+    });
+    onBeforeUnmount(() => {
+      //タイムアウトがあればタイマー解除
+      if (timerId > -1) {
+        clearTimeout(timerId);
+      }
+    });
+
+    /**
+     * ×ボタン押されたことをエミット
+     */
+    const emitClickClosed = () => {
+      //実際に閉じるかどうかは こちらでは制御しないので
+      //timerIdのclearTimeoutは呼ばない
+      //クリアはonBeforeUnmountに任せる
+      emit("clickClosed", props.id);
+    };
+
     const classes = computed(() => {
       const c: string[] = [`is-${props.type}`, `${props.position}`];
-      console.log(c);
       return c;
     });
-    return { classes };
+    return { classes, emitClickClosed };
   },
 });
 </script>
@@ -70,10 +113,10 @@ export default defineComponent({
   }
   &.is-warning {
     background-color: rgb(250, 250, 100);
-    color: white;
+    color: black;
   }
   &.is-danger {
-    background-color: rgb(200, 100, 100);
+    background-color: rgb(250, 100, 100);
     color: white;
   }
 
@@ -113,7 +156,7 @@ export default defineComponent({
     cursor: pointer;
     padding: 0.5em;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 }
 </style>
