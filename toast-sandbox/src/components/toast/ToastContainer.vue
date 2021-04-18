@@ -7,8 +7,8 @@
         :message="t.message"
         :position="t.position"
         :timeoutMills="t.timeoutMills"
-        @clickClosed="removeToast"
-        @timeout="removeToast"
+        @clickClosed="clickClosed"
+        @timeout="timeout"
       />
     </template>
   </div>
@@ -20,17 +20,16 @@
         :message="t.message"
         :position="t.position"
         :timeoutMills="t.timeoutMills"
-        @clickClosed="removeToast"
-        @timeout="removeToast"
+        @clickClosed="clickClosed"
+        @timeout="timeout"
       />
     </template>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, ref } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import Toast from "./Toast.vue";
-import { ToastPublisher, toastPublisherKey } from "./ToastPublisher";
 import { ToastProp } from "./type/ToastProp";
 
 export default defineComponent({
@@ -38,31 +37,29 @@ export default defineComponent({
   components: {
     Toast,
   },
-  setup() {
-    const _toasts = ref<ToastProp[]>([]);
-
-    //TODO このやり方ではだめ、コンポーネントの子ツリーしかinjectで受け取れない
-    //App.vueでprovideするようにしないといけない
-    //ToastPublisherをインジェクション
-    const toastPublisher = new ToastPublisher(_toasts);
-    provide(toastPublisherKey, toastPublisher);
-    //----------------------------
-
-    const removeToast = (id: string) => {
-      _toasts.value = _toasts.value.filter((x) => x.id !== id);
-    };
+  props: {
+    toasts: {
+      type: Array as PropType<ToastProp[]>,
+      require: true,
+    },
+  },
+  emits: ["clickClosed", "timeout"],
+  setup(props, { emit }) {
+    const clickClosed = (id: string): void => emit("clickClosed", id);
+    const timeout = (id: string): void => emit("timeout", id);
 
     const topToasts = computed(() => {
-      return _toasts.value.filter((x) => x.position.startsWith("is-top"));
+      return props.toasts?.filter((x) => x.position.startsWith("is-top"));
     });
     const bottomToasts = computed(() => {
-      return _toasts.value.filter((x) => x.position.startsWith("is-bottom"));
+      return props.toasts?.filter((x) => x.position.startsWith("is-bottom"));
     });
     return {
       topToasts,
       bottomToasts,
 
-      removeToast,
+      clickClosed,
+      timeout,
     };
   },
 });

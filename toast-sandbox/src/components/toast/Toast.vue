@@ -91,19 +91,19 @@ export default defineComponent({
 
   // トーストの属性
   &.is-primary {
-    background-color: rgb(100, 200, 100);
+    background-color: var(--color-primary);
     color: white;
   }
   &.is-success {
-    background-color: rgb(0, 157, 248);
+    background-color: var(--color-success);
     color: white;
   }
   &.is-warning {
-    background-color: rgb(250, 250, 100);
+    background-color: var(--color-warning);
     color: black;
   }
   &.is-danger {
-    background-color: rgb(250, 100, 100);
+    background-color: var(--color-danger);
     color: white;
   }
 

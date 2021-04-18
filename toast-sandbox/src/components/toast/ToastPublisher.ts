@@ -10,7 +10,7 @@ class ToastPublisher {
       type: "primary",
       message,
       position,
-      timeoutMills: 1000,
+      timeoutMills: 3000,
     });
   }
 
@@ -19,7 +19,7 @@ class ToastPublisher {
       type: "warning",
       message,
       position,
-      timeoutMills: 5000,
+      timeoutMills: 10000,
     });
   }
 

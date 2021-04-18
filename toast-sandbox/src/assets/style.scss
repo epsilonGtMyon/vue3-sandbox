@@ -3,3 +3,59 @@ body,
 #app {
   height: 100%;
 }
+//----------------------------------------
+
+:root {
+  --color-primary: rgb(50, 200, 100);
+  --color-primary-dark: rgb(42, 133, 72);
+  --color-success: rgb(0, 157, 248);
+  --color-success-dark: rgb(32, 116, 165);
+  --color-warning: rgb(250, 200, 100);
+  --color-warning-dark: rgb(187, 152, 83);
+  --color-danger: rgb(237, 100, 250);
+  --color-danger-dark: rgb(175, 83, 184);
+}
+
+.button {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: calc(0.5em - 1px);
+  padding-bottom: calc(0.5em - 1px);
+
+  border-radius: 0.5em;
+  cursor: pointer;
+
+  &.is-primary {
+    background-color: var(--color-primary);
+    border-color: transparent;
+    color: white;
+
+    &:active {
+      background-color: var(--color-primary-dark);
+    }
+  }
+  &.is-success {
+    background-color: var(--color-success);
+    border-color: transparent;
+    color: white;
+    &:active {
+      background-color: var(--color-success-dark);
+    }
+  }
+  &.is-warning {
+    background-color: var(--color-warning);
+    border-color: transparent;
+    color: black;
+    &:active {
+      background-color: var(--color-warning-dark);
+    }
+  }
+  &.is-danger {
+    background-color: var(--color-danger);
+    border-color: transparent;
+    color: white;
+    &:active {
+      background-color: var(--color-danger-dark);
+    }
+  }
+}
