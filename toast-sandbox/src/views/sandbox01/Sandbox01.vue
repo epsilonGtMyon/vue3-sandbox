@@ -38,7 +38,7 @@ export default defineComponent({
       toast.warning(message.value);
     };
     const showDanger = () => {
-      toast.danger(message.value, "is-top-left");
+      toast.danger(message.value);
     };
 
     const showPrimaryBottom = () => {
@@ -48,7 +48,7 @@ export default defineComponent({
       toast.warning(message.value, "is-bottom-right");
     };
     const showDangerBottom = () => {
-      toast.danger(message.value, "is-bottom-left");
+      toast.danger(message.value, "is-bottom-right");
     };
     return {
       message,

@@ -49,10 +49,12 @@ export default defineComponent({
     const timeout = (id: string): void => emit("timeout", id);
 
     const topToasts = computed(() => {
-      return props.toasts?.filter((x) => x.position.startsWith("is-top"));
+      //上から降ってくるように出すので リバースしている
+      return props.toasts?.filter((x) => x.position.startsWith("is-top")).reverse();
     });
     const bottomToasts = computed(() => {
-      return props.toasts?.filter((x) => x.position.startsWith("is-bottom"));
+      //上から盛り上がるように出すので リバースしている
+      return props.toasts?.filter((x) => x.position.startsWith("is-bottom")).reverse();
     });
     return {
       topToasts,
