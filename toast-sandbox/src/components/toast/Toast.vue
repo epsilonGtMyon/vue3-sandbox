@@ -20,19 +20,19 @@ export default defineComponent({
   props: {
     id: {
       type: String,
-      require: true,
+      required: true,
     },
     type: {
       type: String as PropType<ToastProp["type"]>,
-      require: true,
+      required: true,
     },
     message: {
       type: String,
-      require: true,
+      required: true,
     },
     position: {
       type: String as PropType<ToastProp["position"]>,
-      require: true,
+      required: true,
     },
     timeoutMills: {
       type: Number,

@@ -40,7 +40,7 @@ export default defineComponent({
   props: {
     toasts: {
       type: Array as PropType<ToastProp[]>,
-      require: true,
+      required: true,
     },
   },
   emits: ["clickClosed", "timeout"],
