@@ -35,20 +35,20 @@ export default defineComponent({
     const toast = useToast();
 
     const showPrimary = () => {
-      toast.primary(message.value);
+      toast.primary(message.value, "is-top-left");
     };
     const showWarning = () => {
-      toast.warning(message.value);
+      toast.warning(message.value, "is-top-center");
     };
     const showDanger = () => {
-      toast.danger(message.value);
+      toast.danger(message.value, "is-top-right");
     };
 
     const showPrimaryBottom = () => {
-      toast.primary(message.value, "is-bottom-right");
+      toast.primary(message.value, "is-bottom-left");
     };
     const showWarningBottom = () => {
-      toast.warning(message.value, "is-bottom-right");
+      toast.warning(message.value, "is-bottom-center");
     };
     const showDangerBottom = () => {
       toast.danger(message.value, "is-bottom-right");

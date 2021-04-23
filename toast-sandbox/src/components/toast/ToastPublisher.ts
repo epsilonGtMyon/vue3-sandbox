@@ -1,11 +1,12 @@
 import { InjectionKey, Ref } from "vue";
-import { ToastProp } from "./type/ToastProp";
+import { ToastParam } from "./type/ToastParam";
+import { ToastPosition } from "./type/ToastPosition";
 
 class ToastPublisher {
   private id = -1;
-  constructor(private toasts: Ref<ToastProp[]>) {}
+  constructor(private toasts: Ref<ToastParam[]>) {}
 
-  public primary(message: string, position?: ToastProp["position"]): void {
+  public primary(message: string, position?: ToastPosition): void {
     this.publish({
       type: "primary",
       message,
@@ -14,7 +15,7 @@ class ToastPublisher {
     });
   }
 
-  public warning(message: string, position?: ToastProp["position"]): void {
+  public warning(message: string, position?: ToastPosition): void {
     this.publish({
       type: "warning",
       message,
@@ -23,7 +24,7 @@ class ToastPublisher {
     });
   }
 
-  public danger(message: string, position?: ToastProp["position"]): void {
+  public danger(message: string, position?: ToastPosition): void {
     this.publish({
       type: "danger",
       message,
@@ -32,7 +33,7 @@ class ToastPublisher {
     });
   }
 
-  public publish(param: Partial<ToastProp>): void {
+  public publish(param: Partial<ToastParam>): void {
     this.id++;
     this.toasts.value.push({
       id: String(this.id),

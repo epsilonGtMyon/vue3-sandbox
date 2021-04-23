@@ -30,10 +30,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    position: {
-      type: String as PropType<ToastProp["position"]>,
-      required: true,
-    },
     timeoutMills: {
       type: Number,
       default: -1,
@@ -69,7 +65,7 @@ export default defineComponent({
     };
 
     const classes = computed(() => {
-      const c: string[] = [`is-${props.type}`, `${props.position}`];
+      const c: string[] = [`is-${props.type}`];
       return c;
     });
     return { classes, emitClickClosed };
@@ -105,26 +101,6 @@ export default defineComponent({
   &.is-danger {
     background-color: var(--color-danger);
     color: white;
-  }
-
-  // トーストの配置場所
-  &.is-top-right {
-    align-self: flex-end;
-  }
-  &.is-top-left {
-    align-self: flex-start;
-  }
-  &.is-top-center {
-    align-self: center;
-  }
-  &.is-bottom-right {
-    align-self: flex-end;
-  }
-  &.is-bottom-left {
-    align-self: flex-start;
-  }
-  &.is-bottom-center {
-    align-self: center;
   }
 
   //閉じる

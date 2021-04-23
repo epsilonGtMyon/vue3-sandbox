@@ -1,13 +1,13 @@
 import { provide, readonly, ref } from "vue";
 import { ToastPublisher, toastPublisherKey } from "./ToastPublisher";
-import { ToastProp } from "./type/ToastProp";
+import { ToastParam } from "./type/ToastParam";
 
 function useSetupToast() {
-  const toasts = ref<ToastProp[]>([]);
+  const toasts = ref<ToastParam[]>([]);
 
   const toastPublisher = new ToastPublisher(toasts);
   provide(toastPublisherKey, toastPublisher);
-  
+
   const removeToast = (id: string) => {
     toasts.value = toasts.value.filter((x) => x.id !== id);
   };
