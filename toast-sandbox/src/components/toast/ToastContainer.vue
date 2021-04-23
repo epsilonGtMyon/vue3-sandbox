@@ -1,5 +1,5 @@
 <template>
-  <!-- 冗長すぎるな...-->
+  <!-- 冗長すぎるので さらにグルーピングしてv-forでループするのもありかも-->
 
   <!-- 上段左 -->
   <div class="toastContainer toastContainer__top toastContainer__left">
@@ -8,6 +8,7 @@
         :id="t.id"
         :type="t.type"
         :message="t.message"
+        :position="t.position"
         :timeoutMills="t.timeoutMills"
         @clickClosed="clickClosed"
         @timeout="timeout"
@@ -21,6 +22,7 @@
         :id="t.id"
         :type="t.type"
         :message="t.message"
+        :position="t.position"
         :timeoutMills="t.timeoutMills"
         @clickClosed="clickClosed"
         @timeout="timeout"
@@ -34,6 +36,7 @@
         :id="t.id"
         :type="t.type"
         :message="t.message"
+        :position="t.position"
         :timeoutMills="t.timeoutMills"
         @clickClosed="clickClosed"
         @timeout="timeout"
@@ -48,6 +51,7 @@
         :id="t.id"
         :type="t.type"
         :message="t.message"
+        :position="t.position"
         :timeoutMills="t.timeoutMills"
         @clickClosed="clickClosed"
         @timeout="timeout"
@@ -61,6 +65,7 @@
         :id="t.id"
         :type="t.type"
         :message="t.message"
+        :position="t.position"
         :timeoutMills="t.timeoutMills"
         @clickClosed="clickClosed"
         @timeout="timeout"
@@ -74,6 +79,7 @@
         :id="t.id"
         :type="t.type"
         :message="t.message"
+        :position="t.position"
         :timeoutMills="t.timeoutMills"
         @clickClosed="clickClosed"
         @timeout="timeout"
@@ -104,11 +110,14 @@ export default defineComponent({
     const clickClosed = (id: string): void => emit("clickClosed", id);
     const timeout = (id: string): void => emit("timeout", id);
 
+    /**
+     * positionでフィルタリングして逆順にした配列を返す
+     */
     const _filterAndReverseToast = (
       toasts: ToastParam[],
       position: ToastPosition
     ) => {
-      //リバースしておかないと表示順が逆になるので
+      //リバースしておかないと表示順が逆になる
       //topなら新しいほうを上に出したい
       //bottomなら新しいほうを下に出したい
       //なので通常方向に積み上げてはだめ

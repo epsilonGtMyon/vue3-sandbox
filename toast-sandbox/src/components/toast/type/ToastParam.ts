@@ -1,4 +1,4 @@
-import { ToastPosition } from "./ToastPosition";
 import { ToastProp } from "./ToastProp";
 
-export type ToastParam = ToastProp & { position: ToastPosition };
+//今の段階では同じだけど 今後分岐があった時のために 分けておく
+export type ToastParam = ToastProp;

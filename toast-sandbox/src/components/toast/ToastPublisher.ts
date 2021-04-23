@@ -2,10 +2,18 @@ import { InjectionKey, Ref } from "vue";
 import { ToastParam } from "./type/ToastParam";
 import { ToastPosition } from "./type/ToastPosition";
 
+/**
+ * トーストの発行を行う
+ */
 class ToastPublisher {
   private id = -1;
   constructor(private toasts: Ref<ToastParam[]>) {}
 
+  /**
+   * primaryレベルのトーストを出す
+   * @param message 
+   * @param position 
+   */
   public primary(message: string, position?: ToastPosition): void {
     this.publish({
       type: "primary",
@@ -15,6 +23,11 @@ class ToastPublisher {
     });
   }
 
+  /**
+   * warningレベルのトーストを出す
+   * @param message 
+   * @param position 
+   */
   public warning(message: string, position?: ToastPosition): void {
     this.publish({
       type: "warning",
@@ -24,6 +37,11 @@ class ToastPublisher {
     });
   }
 
+  /**
+   * dangerレベルのトーストを出す
+   * @param message 
+   * @param position 
+   */
   public danger(message: string, position?: ToastPosition): void {
     this.publish({
       type: "danger",
@@ -33,6 +51,10 @@ class ToastPublisher {
     });
   }
 
+  /**
+   * toastを出す(汎用)
+   * @param param 
+   */
   public publish(param: Partial<ToastParam>): void {
     this.id++;
     this.toasts.value.push({
@@ -49,6 +71,9 @@ class ToastPublisher {
   }
 }
 
+/**
+ * provide/inject用のキー
+ */
 const toastPublisherKey: InjectionKey<ToastPublisher> = Symbol(
   "ToastPublisher"
 );

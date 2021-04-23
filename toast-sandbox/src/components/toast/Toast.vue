@@ -1,8 +1,12 @@
 <template>
-  <div class="toast" :class="classes">
-    {{ message }}
-    <span class="close" @click="emitClickClosed"></span>
-  </div>
+  <transition :name="transitionName">
+    <template v-if="visible">
+      <div class="toast" :class="classes">
+        {{ message }}
+        <span class="close" @click="emitClickClosed"></span>
+      </div>
+    </template>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -12,6 +16,7 @@ import {
   onBeforeUnmount,
   onMounted,
   PropType,
+  ref,
 } from "vue";
 import { ToastProp } from "./type/ToastProp";
 
@@ -30,16 +35,24 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    position: {
+      type: String as PropType<ToastProp["position"]>,
+      required: true,
+    },
     timeoutMills: {
       type: Number,
-      default: -1,
+      default: -1, //-1はタイムアウトなし
     },
   },
   emits: ["clickClosed", "timeout"],
   setup(props, { emit }) {
     let timerId = -1;
 
+    //transition 制御のために表示状態を持つ
+    const visible = ref(false);
+
     onMounted(() => {
+      visible.value = true;
       //タイムアウトがあればタイマー設定
       if (props.timeoutMills > -1) {
         timerId = setTimeout(() => {
@@ -48,6 +61,7 @@ export default defineComponent({
       }
     });
     onBeforeUnmount(() => {
+      visible.value = false;
       //タイムアウトがあればタイマー解除
       if (timerId > -1) {
         clearTimeout(timerId);
@@ -64,11 +78,23 @@ export default defineComponent({
       emit("clickClosed", props.id);
     };
 
+    /**
+     * トランジション名
+     */
+    const transitionName = computed(() => {
+      //positionに応じてアニメーション方向を決定
+      return props.position.startsWith("is-top") ? "slide-down" : "slide-up";
+    });
+
+    /**
+     * 付与するクラス名
+     */
     const classes = computed(() => {
       const c: string[] = [`is-${props.type}`];
       return c;
     });
-    return { classes, emitClickClosed };
+
+    return { visible, transitionName, classes, emitClickClosed };
   },
 });
 </script>
@@ -80,6 +106,7 @@ export default defineComponent({
   padding: 1em 2em;
   border-radius: 5px;
   display: inline;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 
   margin-top: 10px;
   // コンテナがnoneにしているのでここは有効にする
@@ -121,5 +148,17 @@ export default defineComponent({
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.3);
   }
+}
+
+//トランジション関係
+.slide-up-enter-from {
+  transform: translateY(20px);
+}
+.slide-down-enter-from {
+  transform: translateY(-20px);
+}
+.slide-up-enter-active,
+.slide-down-enter-active {
+  transition: transform 100ms linear;
 }
 </style>
