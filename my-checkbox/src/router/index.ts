@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/home/Home.vue";
+import Sandbox01 from "../views/sandbox01/Sandbox01.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -10,6 +11,11 @@ const routes: RouteRecordRaw[] = [
     path: "/home",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/sandbox01",
+    name: "Sandbox01",
+    component: Sandbox01,
   },
 ];
 

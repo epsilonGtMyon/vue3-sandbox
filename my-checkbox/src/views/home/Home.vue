@@ -1,6 +1,5 @@
 <template>
-  <div>home</div>
-  <HelloWorld />
+  <HelloWorld msg="😀"/>
 </template>
 
 <script lang="ts">

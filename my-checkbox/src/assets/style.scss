@@ -1,0 +1,17 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+//----------------------------------------
+
+:root {
+  --color-primary: rgb(50, 200, 100);
+  --color-primary-dark: rgb(42, 133, 72);
+  --color-success: rgb(0, 157, 248);
+  --color-success-dark: rgb(32, 116, 165);
+  --color-warning: rgb(250, 200, 100);
+  --color-warning-dark: rgb(187, 152, 83);
+  --color-danger: rgb(237, 100, 250);
+  --color-danger-dark: rgb(175, 83, 184);
+}
