@@ -9,9 +9,6 @@ const routes: Array<RouteRecordRaw> = [
 
     name: "Home",
     component: Home,
-    meta: {
-      requiresAuth: false,
-    },
   },
   {
     path: "/sandbox01",
@@ -33,6 +30,22 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/sandbox02a",
+    name: "Sandbox02A",
+    component: () =>
+      import(
+        /* webpackChunkName: "sandbox02a" */ "../views/sandbox02/Sandbox02A.vue"
+      ),
+  },
+  {
+    path: "/sandbox02b",
+    name: "Sandbox02B",
+    component: () =>
+      import(
+        /* webpackChunkName: "sandbox02b" */ "../views/sandbox02/Sandbox02B.vue"
+      ),
+  },
 ];
 
 const router = createRouter({
@@ -42,7 +55,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   //たとえばこんなこととか
-  if (to.meta.requiresAuth) {
+  if (to.meta.requiresAuth === true) {
     return store.state.logined;
   }
 });

@@ -5,7 +5,8 @@
       <button @click="changeLogined">change</button>
     </div>
     <ul>
-      <li><a href="#" @click.prevent="toSandbox01">aaa</a></li>
+      <li><a href="#" @click.prevent="toSandbox01">sandbox01</a></li>
+      <li><router-link to="/sandbox02a">Sandbox02A</router-link></li>
     </ul>
   </div>
 </template>
