@@ -1,0 +1,16 @@
+
+table.myTable {
+    border-collapse: collapse;
+    
+    td, th {
+      border: 1px solid black;
+    }
+  
+    tr.level-1 td:first-child {
+      padding-left: 15px;
+    }
+    tr.level-2 td:first-child {
+      padding-left: 30px;
+    }
+}
+  
