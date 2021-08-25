@@ -21,6 +21,14 @@ const routes: Array<RouteRecordRaw> = [
         /* webpackChunkName: "mouseposition" */ "@/pages/mouseposition/MousePosition.vue"
       ),
   },
+  {
+    path: "/interval",
+    name: "Interval",
+    component: () =>
+      import(
+        /* webpackChunkName: "interval" */ "@/pages/interval/Interval.vue"
+      ),
+  },
 ];
 
 const router = createRouter({

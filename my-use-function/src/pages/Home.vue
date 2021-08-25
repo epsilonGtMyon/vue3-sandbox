@@ -22,6 +22,7 @@ export default defineComponent({
       routes.value = [
         { path: "/counter", label: "カウンター" },
         { path: "/mouseposition", label: "マウス位置" },
+        { path: "/interval", label: "インターバル" },
       ];
     });
 
