@@ -1,24 +1,9 @@
 # message-dialog
 
-## Project setup
-```
-npm install
-```
+Composition API を使ってメッセージダイアログを表示するには どうするのがいいのじゃろうか
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+というのを試したもの
 
-### Compiles and minifies for production
-```
-npm run build
-```
+素のcss で作ったので どのUIフレームワークでも応用が利くと思う。
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

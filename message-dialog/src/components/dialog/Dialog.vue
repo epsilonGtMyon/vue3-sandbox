@@ -22,21 +22,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
-
-type DialogType = "is-primary" | "is-danger";
-type ActionButton = {
-  text: string;
-  buttonType: DialogType;
-  outline?: boolean;
-};
-
-type ShowParam = {
-  title: string;
-  titleType: DialogType;
-  message: string;
-  actionButtons: ActionButton[];
-};
+import { computed, defineComponent, inject, onMounted, ref } from "vue";
+import {
+  DialogType,
+  DialogActionButton,
+  DialogActionButtonHandler,
+  DialogShowParam,
+} from "./DialogTypes";
+import { messageDialogKey } from "./messageDialogKey";
 
 export default defineComponent({
   name: "Dialog",
@@ -47,41 +40,41 @@ export default defineComponent({
     const titleType = ref<DialogType>("is-primary");
     const message = ref("");
     const titleClass = computed(() => [titleType.value]);
+    let actionButtonHandler: DialogActionButtonHandler | null = null;
 
-    const actionButtons = ref<ActionButton[]>([]);
+    const actionButtons = ref<DialogActionButton[]>([]);
 
     // これを呼べるようにする。
-    const show = (param: ShowParam) => {
+    const show = (param: DialogShowParam) => {
       visible.value = true;
 
       title.value = param.title;
       titleType.value = param.titleType;
       message.value = param.message;
       actionButtons.value = param.actionButtons;
+      actionButtonHandler = param.actionButtonHandler;
     };
 
     const clicked = (buttonOrder: number) => {
-      console.log(buttonOrder);
+      if (actionButtonHandler) {
+        actionButtonHandler(buttonOrder);
+        visible.value = false;
+        actionButtonHandler = null;
+      }
     };
 
-    setTimeout(() => {
-      show({
-        title: "確認",
-        titleType: "is-primary",
-        message: "登録しますか？",
-        actionButtons: [
-          {
-            text: "OK",
-            buttonType: "is-primary",
-          },
-          {
-            text: "Cancel",
-            buttonType: "is-primary",
-            outline: true,
-          },
-        ],
+    const messageDialog = inject(messageDialogKey);
+
+    onMounted(() => {
+      messageDialog?.replaceHandle({
+        show,
+        close() {
+          if (visible.value) {
+            clicked(-1);
+          }
+        },
       });
-    }, 1000);
+    });
 
     return {
       visible,
@@ -127,6 +120,14 @@ export default defineComponent({
     background-color: rgb(89, 200, 89);
     color: white;
   }
+  &.is-info {
+    background-color: rgb(39, 165, 204);
+    color: white;
+  }
+  &.is-danger {
+    background-color: rgb(255, 100, 100);
+    color: white;
+  }
 }
 .dialog-content {
   background-color: white;
@@ -163,6 +164,24 @@ export default defineComponent({
       background-color: white;
       color: rgb(89, 200, 89);
       border-color: rgb(89, 200, 89);
+    }
+  }
+  &.is-info {
+    background-color: rgb(39, 165, 204);
+    color: white;
+    &.is-outline {
+      background-color: white;
+      color: rgb(39, 165, 204);
+      border-color: rgb(39, 165, 204);
+    }
+  }
+  &.is-danger {
+    background-color: rgb(255, 100, 100);
+    color: white;
+    &.is-outline {
+      background-color: white;
+      color: rgb(255, 100, 100);
+      border-color: rgb(255, 100, 100);
     }
   }
 }
