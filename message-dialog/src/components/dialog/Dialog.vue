@@ -22,14 +22,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import {
   DialogType,
   DialogActionButton,
   DialogActionButtonHandler,
   DialogShowParam,
 } from "./DialogTypes";
-import { messageDialogKey } from "./messageDialogKey";
+import { useMessageDialog } from "./useMessageDialog";
 
 export default defineComponent({
   name: "Dialog",
@@ -44,7 +44,6 @@ export default defineComponent({
 
     const actionButtons = ref<DialogActionButton[]>([]);
 
-    // これを呼べるようにする。
     const show = (param: DialogShowParam) => {
       visible.value = true;
 
@@ -63,12 +62,14 @@ export default defineComponent({
       }
     };
 
-    const messageDialog = inject(messageDialogKey);
-
+    const messageDialog = useMessageDialog();
+    
     onMounted(() => {
-      messageDialog?.replaceHandle({
+      //マウント時に このコンポーネントのshowとかを handleとして公開する。
+      messageDialog.replaceHandle({
         show,
         close() {
+          // ここらのつくりが甘い..
           if (visible.value) {
             clicked(-1);
           }
