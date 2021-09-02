@@ -4,19 +4,19 @@ import { messageDialogKey } from "./messageDialogKey";
 
 /**
  * メッセージダイアログを使用します。
- * @param closeWhenUnmount 使用するコンポーネントが廃棄されるときにダイアログを閉じるか？
+ * @param abortWhenUnmount 使用するコンポーネントが廃棄されるときにアボートを実行するか
  * @returns メッセージダイアログ
  */
-function useMessageDialog(closeWhenUnmount = true): MessageDialog {
+function useMessageDialog(abortWhenUnmount = true): MessageDialog {
   const messageDialog = inject(messageDialogKey);
   if (messageDialog == undefined) {
     throw new Error(`messageDialog is not found`);
   }
 
-  if (closeWhenUnmount) {
+  if (abortWhenUnmount) {
     //ダイアログが表示されているコンポーネントが廃棄されるときにダイアログが表示されていれば、ダイアログも閉じる
     onBeforeUnmount(() => {
-      messageDialog.closeIfVisible();
+      messageDialog.abortIfVisible();
     });
   }
 

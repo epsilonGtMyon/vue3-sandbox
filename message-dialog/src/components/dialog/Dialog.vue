@@ -22,13 +22,21 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "vue";
 import {
   DialogType,
   DialogActionButton,
   DialogActionButtonHandler,
+  DialogAbortHandler,
   DialogShowParam,
 } from "./DialogTypes";
+import { MessageDialogAbortError } from "./MessageDialogAbortError";
 import { useMessageDialog } from "./useMessageDialog";
 
 export default defineComponent({
@@ -40,10 +48,16 @@ export default defineComponent({
     const titleType = ref<DialogType>("is-primary");
     const message = ref("");
     const titleClass = computed(() => [titleType.value]);
-    let actionButtonHandler: DialogActionButtonHandler | null = null;
+    let actionButtonHandler: DialogActionButtonHandler = () => {
+      //noop
+    };
+    let abortHandler: DialogAbortHandler = () => {
+      //noop
+    };
 
     const actionButtons = ref<DialogActionButton[]>([]);
 
+    /** 表示 */
     const show = (param: DialogShowParam) => {
       visible.value = true;
 
@@ -52,29 +66,40 @@ export default defineComponent({
       message.value = param.message;
       actionButtons.value = param.actionButtons;
       actionButtonHandler = param.actionButtonHandler;
+      abortHandler = param.abortHandler;
     };
 
+    /** ボタンクリック時 */
     const clicked = (buttonOrder: number) => {
-      if (actionButtonHandler) {
-        actionButtonHandler(buttonOrder);
-        visible.value = false;
-        actionButtonHandler = null;
-      }
+      actionButtonHandler(buttonOrder);
+      cleanup();
+    };
+
+    const cleanup = () => {
+      visible.value = false;
+      actionButtonHandler = () => {
+        //noop;
+      };
+      abortHandler = () => {
+        //noop;
+      };
     };
 
     const messageDialog = useMessageDialog();
-    
+
     onMounted(() => {
       //マウント時に このコンポーネントのshowとかを handleとして公開する。
       messageDialog.replaceHandle({
         show,
-        close() {
-          // ここらのつくりが甘い..
-          if (visible.value) {
-            clicked(-1);
-          }
+        abort(error) {
+          abortHandler(error);
+          cleanup();
         },
       });
+    });
+
+    onBeforeUnmount(() => {
+      abortHandler(new MessageDialogAbortError());
     });
 
     return {

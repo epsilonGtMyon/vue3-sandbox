@@ -17,6 +17,8 @@ type DialogActionButton = {
 
 /** ダイアログのボタンをクリックしたときのハンドラ */
 type DialogActionButtonHandler = (index: number) => void;
+/** 中止のハンドラ(rejectする) */
+type DialogAbortHandler = <T extends Error>(error: T) => void;
 
 /** ダイアログを表示するためのパラメータ */
 type DialogShowParam = {
@@ -25,18 +27,20 @@ type DialogShowParam = {
   message: string;
   actionButtons: DialogActionButton[];
   actionButtonHandler: DialogActionButtonHandler;
+  abortHandler: DialogAbortHandler;
 };
 
 /** ダイアログの実体を操作するためのハンドル */
 type DialogHandle = {
   show(param: DialogShowParam): void;
-  close(): void;
+  abort<T extends Error>(error: T): void;
 };
 
 export {
   DialogType,
   DialogActionButton,
   DialogActionButtonHandler,
+  DialogAbortHandler,
   DialogShowParam,
   DialogHandle,
 };

@@ -15,8 +15,7 @@ export default defineComponent({
   name: "Sandbox01",
   setup() {
     const messageDialog = useMessageDialog();
-    const router = useRouter()
-
+    const router = useRouter();
 
     const showInfo = async () => {
       await messageDialog.info(`情報メッセージ
@@ -37,9 +36,9 @@ export default defineComponent({
     const showError = async () => {
       await messageDialog.error(`エラーだよーん`);
 
-      setTimeout(()=> {
-        router.push('/home')
-      }, 2000)
+      setTimeout(() => {
+        router.push("/home");
+      }, 2000);
     };
     return { showInfo, showConfirm, showError };
   },

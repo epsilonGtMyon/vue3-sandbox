@@ -1,4 +1,5 @@
 import { DialogHandle, DialogShowParam } from "./DialogTypes";
+import { MessageDialogAbortError } from "./MessageDialogAbortError";
 
 /**
  * メッセージダイアログを操作するクラス
@@ -24,9 +25,9 @@ class MessageDialog {
    * @returns
    */
   private show(
-    param: Omit<DialogShowParam, "actionButtonHandler">
+    param: Omit<DialogShowParam, "actionButtonHandler" | "abortHandler">
   ): Promise<number> {
-    return new Promise<number>((resolve) => {
+    return new Promise<number>((resolve, reject) => {
       if (this.handle == undefined) {
         throw new Error("handle is null or undefined");
       }
@@ -34,6 +35,7 @@ class MessageDialog {
       const showParam: DialogShowParam = {
         ...param,
         actionButtonHandler: resolve,
+        abortHandler: reject,
       };
       this.handle.show(showParam);
     });
@@ -44,7 +46,7 @@ class MessageDialog {
    * @param message メッセージ
    * @returns
    */
-  public info(message: string): Promise<unknown> {
+  public info(message: string): Promise<boolean> {
     return this.show({
       title: "情報",
       titleType: "is-primary",
@@ -55,7 +57,7 @@ class MessageDialog {
           buttonType: "is-primary",
         },
       ],
-    });
+    }).then((x) => x === 0);
   }
 
   /**
@@ -87,7 +89,7 @@ class MessageDialog {
    * @param message メッセージ
    * @returns
    */
-  public error(message: string): Promise<unknown> {
+  public error(message: string): Promise<boolean> {
     return this.show({
       title: "エラー",
       titleType: "is-danger",
@@ -98,19 +100,18 @@ class MessageDialog {
           buttonType: "is-danger",
         },
       ],
-    });
+    }).then((x) => x === 0);
   }
 
-  //ここの作りこみが甘いね..
   /**
-   * もし開いてたら閉じる
+   * もし開いてたらアボートする
    * @returns
    */
-  public closeIfVisible(): void {
+  public abortIfVisible(): void {
     if (this.handle == undefined) {
       return;
     }
-    this.handle.close();
+    this.handle.abort(new MessageDialogAbortError("DialogAbort"));
   }
 }
 
