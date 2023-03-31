@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/vue3-sandbox/strict-input/',
   plugins: [vue()],
   resolve: {
     alias: {
@@ -13,5 +14,8 @@ export default defineConfig({
   },
   server: {
     open: true
+  },
+  build: {
+    outDir: '../docs/strict-input'
   }
 })
