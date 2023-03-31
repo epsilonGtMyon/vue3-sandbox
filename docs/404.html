@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue3-sandbox</title>
+  
+  <meta name="og:url" content="https://epsilongtmyon.github.io/vue3-sandbox/">
+  <meta name="og:type" content="website">
+  <meta name="og:title" content="Vue3 Sandbox Demo🤔">
+  <meta name="og:image" content="https://avatars.githubusercontent.com/u/34003200?v=4">
+  <meta name="og:description" content="Vue3 のサンドボックスのデモ">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Vue3 Sandbox Demo🤔">
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/34003200?v=4">
+  <meta name="twitter:description" content="Vue3 のサンドボックスのデモ">
+</head>
+<body>
+  <script type="text/javascript">
+
+    const pathElements = location.pathname.split("/")
+    if (pathElements.length < 3) {
+      location.href = '/vue3-sandbox'
+      return
+    }
+    const subProjectPath = pathElements.slice(0, 3).join("/")
+    const subProjectPagePath = pathElements.slice(3).join("/")
+
+    sessionStorage.setItem('subProjectPagePath', subProjectPagePath)
+    location.href = subProjectPath
+  </script>
+</body>
+</html>
