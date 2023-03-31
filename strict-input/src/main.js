@@ -18,3 +18,10 @@ const inputFilters = createInputFilterMap();
 app.provide(inputFiltersKey, inputFilters);
 
 app.mount("#app");
+
+
+const subProjectPagePath = sessionStorage.getItem("subProjectPagePath")
+if (subProjectPagePath != null) {
+  sessionStorage.removeItem("subProjectPagePath");
+  router.push(`/${subProjectPagePath}`)
+}
