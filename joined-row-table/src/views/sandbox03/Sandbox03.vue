@@ -17,15 +17,8 @@ const recordsJson = computed(() => {
 
 <template>
   <div>
-    <h1>ループロジックの移動</h1>
+    <h1>ループロジックの移動2</h1>
     <div>
-      <p>
-        TableRecordHandlerというコンポーネントにループ周りのロジックを移動
-        コンポーネントの中でループのロジックをハードコーディングで記述している。
-      </p>
-      <p>
-        ループのロジックを切り出したりしてカスタマイズできるようにするのが目標
-      </p>
     </div>
 
     <table class="grid">
@@ -40,9 +33,11 @@ const recordsJson = computed(() => {
       </thead>
       <tbody>
         <TableRecordHandler :records="records">
-          <template #default="{ record1, record2, record3, i2, i3 }">
+          <template
+            #default="{ record1, record1First, record2, record2First, record3 }"
+          >
             <tr>
-              <template v-if="i2 === 0 && i3 === 0">
+              <template v-if="record1First">
                 <td :rowspan="record1.rowspan">
                   {{ record1.bu }}
                 </td>
@@ -52,7 +47,7 @@ const recordsJson = computed(() => {
                 </td>
               </template>
 
-              <template v-if="i3 === 0">
+              <template v-if="record2First">
                 <td :rowspan="record2.rowspan">
                   {{ record2.ka }}
                 </td>

@@ -10,7 +10,8 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/">Home</RouterLink> | 
         <RouterLink to="/rendersandbox01">rendersandbox01</RouterLink> | 
         <RouterLink to="/sandbox01">sandbox01</RouterLink> | 
-        <RouterLink to="/sandbox02">sandbox02</RouterLink>
+        <RouterLink to="/sandbox02">sandbox02</RouterLink> | 
+        <RouterLink to="/sandbox03">sandbox03</RouterLink>
       </nav>
     </div>
   </header>

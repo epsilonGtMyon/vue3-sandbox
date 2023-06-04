@@ -7,30 +7,55 @@ const props = defineProps({
   },
 });
 
-const childrenExtractor = [
+const definitions = [
   { name: "record1", extractor: (x) => x.children },
   { name: "record2", extractor: (x) => x.children },
+  { name: "record3", extractor: undefined },
 ];
 
+// いい名前が思い浮かばないのでとりあえずxxx
+// 再帰的にループして リーフの内容で展開
+function xxx(records, context, level) {
+  const array = [];
+  const isLeaf = level == definitions.length - 1;
+  const definistion = definitions[level];
+
+  //[`${definistion.name}First`]: first
+  for (const record of records) {
+    const nextContext = {
+      ...context,
+      [definistion.name]: record,
+    };
+
+    if (isLeaf) {
+      array.push(nextContext);
+    } else {
+      const children = definistion.extractor(record);
+
+      // いい名前が思い浮かばないのでとりあえずyyy
+      // 直下の要素をleafで展開した状態のモノを取得
+      const yyy = xxx(children, nextContext, level + 1);
+      let first = true;
+      for (const y of yyy) {
+        // leafで展開したときの最初の要素がtdの出力要素となる
+        y[`${definistion.name}First`] = first;
+        first = false;
+        array.push(y);
+      }
+    }
+  }
+
+  return array;
+}
+
+
 const computedRecords = computed(() => {
-  return props.records;
+  return xxx(props.records, {}, 0);
 });
 </script>
 
 <template>
-  <template v-for="(record1, i1) in records" :key="i1">
-    <template v-for="(record2, i2) in record1.children" :key="i2">
-      <template v-for="(record3, i3) in record2.children" :key="i3">
-        <slot
-          v-bind="{
-            record1,
-            record2,
-            record3,
-            i2,
-            i3,
-          }"
-        ></slot>
-      </template>
-    </template>
+  <template v-for="record in computedRecords">
+    <slot v-bind="record"></slot>
   </template>
 </template>
