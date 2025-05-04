@@ -1,0 +1,1 @@
+import{r as n,k as r,l as a,m as u}from"./index-mYAXed0M.js";function o(){const t=n(new Date);let e=null;return r(()=>{e=setInterval(()=>{t.value=new Date},300)}),a(()=>{e!==null&&clearInterval(e)}),{currentDate:u(t)}}export{o as u};

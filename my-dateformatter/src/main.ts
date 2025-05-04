@@ -14,3 +14,10 @@ app.use(router)
 app.use(myDateFormater)
 
 app.mount('#app')
+
+// GitHub Pages用
+const subProjectPagePath = sessionStorage.getItem('subProjectPagePath')
+if (subProjectPagePath != null) {
+  sessionStorage.removeItem('subProjectPagePath')
+  router.push(`/${subProjectPagePath}`)
+}
