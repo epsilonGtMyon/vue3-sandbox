@@ -6,6 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/vue3-sandbox/vue-i18n-sandbox/',
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
@@ -14,5 +15,8 @@ export default defineConfig({
   },
   server: {
     open: true,
+  },
+  build: {
+    outDir: '../docs/vue-i18n-sandbox',
   },
 })
