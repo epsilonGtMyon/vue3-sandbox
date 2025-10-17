@@ -17,3 +17,10 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+// GitHub Pages用
+const subProjectPagePath = sessionStorage.getItem('subProjectPagePath')
+if (subProjectPagePath != null) {
+  sessionStorage.removeItem('subProjectPagePath')
+  router.replace(`/${subProjectPagePath}`)
+}

@@ -21,14 +21,14 @@
     function handle404() {
       const pathElements = location.pathname.split("/")
       if (pathElements.length < 3) {
-        location.href = '/vue3-sandbox'
+        location.replace('/vue3-sandbox')
         return
       }
       const subProjectPath = pathElements.slice(0, 3).join("/")
       const subProjectPagePath = pathElements.slice(3).join("/")
 
       sessionStorage.setItem('subProjectPagePath', subProjectPagePath)
-      location.href = subProjectPath
+      location.replace(subProjectPath)
     }
 
     handle404()
