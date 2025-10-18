@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'menu',
       component: () => import('../views/menu/MenuView.vue'),
     },
+    {
+      path: '/tab',
+      name: 'tab',
+      component: () => import('../views/tab/TabView.vue'),
+    },
   ],
 })
 

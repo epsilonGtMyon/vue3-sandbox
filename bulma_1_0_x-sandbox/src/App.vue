@@ -3,6 +3,7 @@ import { ref } from 'vue'
 const pages = ref([
   { name: 'Home', path: '/' },
   { name: 'Menu', path: '/menu' },
+  { name: 'Tab', path: '/tab' },
 ])
 </script>
 
