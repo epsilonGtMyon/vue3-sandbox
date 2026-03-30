@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as e,c}from"./index-ZmU1k2p8.js";const n={};function r(t,s){return e(),c("h1",null,"sandbox01")}const f=o(n,[["render",r]]);export{f as default};

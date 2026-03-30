@@ -1,0 +1,1 @@
+import{e as a,u as c,o as l,c as r,a as n,f as i}from"./index-ZmU1k2p8.js";const f=a({__name:"login",setup(p){const e=i(),s=c();function u(){s.login(),e.push("/basic")}return(m,o)=>(l(),r("div",null,[o[0]||(o[0]=n("h1",null,"login",-1)),n("button",{onClick:u},"ログイン")]))}}),t={};typeof t=="function"&&t(f);export{f as default};

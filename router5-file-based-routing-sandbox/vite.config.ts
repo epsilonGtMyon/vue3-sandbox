@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/vue3-sandbox/router5-file-based-routing-sandbox/",
   plugins: [
     // file based routingのためにVueRouterを追加
     VueRouter(),
@@ -17,5 +18,11 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
+  },
+  server: {
+    open: true,
+  },
+  build: {
+    outDir: '../docs/router5-file-based-routing-sandbox',
   },
 })
