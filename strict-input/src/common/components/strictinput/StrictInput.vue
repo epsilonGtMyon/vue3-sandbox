@@ -36,16 +36,7 @@ watch(() => props.filter, () => {
   computedValue.value = convertValue(computedValue.value);
 })
 
-/**
- * IME変換途中を表す状態
- */
-const composing = ref(false);
-const onCompositionstart = () => {
-  composing.value = true;
-};
 const onCompositionend = (ev) => {
-  composing.value = false;
-
   // IME変換終了後は値変更を発火させる
   const value = ev.target.value;
   computedValue.value = convertValue(value);
@@ -53,10 +44,10 @@ const onCompositionend = (ev) => {
 
 /**
  * inputイベントのハンドラ
- * @param {*} ev 
+ * @param {KeyboardEvent} ev キーイベント
  */
 const onInput = (ev) => {
-  if (composing.value) {
+  if (isComposing(ev)) {
     // IME変換中は特になにも加工しない
     return;
   }
@@ -82,6 +73,14 @@ const inputFilter = computed(() => {
 
 function convertValue(value) {
   return inputFilter.value(value)
+}
+
+/**
+ * IME変換中であるか
+ * @param {KeyboardEvent} ev キーイベント
+ */
+function isComposing(ev) {
+  return ev.isComposing || ev.keyCode === 229
 }
 </script>
 
